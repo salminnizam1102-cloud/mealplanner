@@ -17,13 +17,13 @@ public class WelcomeFrame extends JFrame {
        
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
-        panel.setBackground(new Color(54, 33, 25)); 
+        panel.setBackground(Color.WHITE); 
 
         
         JLabel heading = new JLabel("Welcome to Meal Planner");
         heading.setFont(new Font("Times New Roman", Font.BOLD, 30));
         heading.setHorizontalAlignment(SwingConstants.CENTER);
-        heading.setForeground(Color.WHITE);
+        heading.setForeground(Color.BLACK);
 
      
         JButton nextButton = new JButton("explore"); 

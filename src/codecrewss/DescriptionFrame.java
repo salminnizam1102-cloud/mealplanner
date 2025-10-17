@@ -11,11 +11,11 @@ public class DescriptionFrame extends JFrame {
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel(new BorderLayout());
-        panel.setBackground(new Color(54, 33, 25));
+        panel.setBackground(Color.WHITE);
 
         JLabel label = new JLabel(
             "<html><center><font color='yellow' size='+3'><b>ABOUT US</b></font><br><br>" +
-            "This app calculates your daily calorie needs (BMR & TDEE) and suggests meals.it Helps maintain healthy diet in busy life.<br>" +
+            "This calculates your daily calorie needs (BMR & TDEE) and suggests meals.it Helps maintain healthy diet in busy life.<br>" +
             "<b>This meal planner provides a customizable, balanced daily meal plan designed for healthy adults.<br><br>"
             + "</b><font color='blue' size='+1'>MEAL DISTRIBUTION.</b></font><br><br>"
             + "</b>•Breakfast: Energizing start with fiber-rich carbs and nuts(35% of calories)<br>"
@@ -27,7 +27,7 @@ public class DescriptionFrame extends JFrame {
             "- Suggest meals from 1400-3800 kcal ranges.<br>" +
             "- Promote fitness through balanced eating.</html>", JLabel.CENTER);
         label.setFont(new Font("times new roman", Font.ITALIC, 16));
-        label.setForeground(Color.WHITE);
+        label.setForeground(new Color(54,33,25));
         panel.add(label, BorderLayout.CENTER);
 
         JPanel buttons = new JPanel();
