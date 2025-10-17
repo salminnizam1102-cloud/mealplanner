@@ -4,52 +4,48 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 public class WelcomeFrame extends JFrame {
 
     public WelcomeFrame() {
-       
         setTitle("Welcome to Meal Planner");
-        setSize(400, 300);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(600, 400);
         setLocationRelativeTo(null);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-       
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
-        panel.setBackground(Color.WHITE); 
+        panel.setBackground(Color.WHITE);
 
-        
-        JLabel heading = new JLabel("Welcome to Meal Planner");
-        heading.setFont(new Font("Times New Roman", Font.BOLD, 30));
-        heading.setHorizontalAlignment(SwingConstants.CENTER);
-        heading.setForeground(Color.BLACK);
+        JLabel title = new JLabel("<html><center><h1 style='color:#2C3E50;'>Welcome to Meal Planner</h1>"
+                + "<h3 style='color:#16A085;'>Your daily healthy diet assistant</h3></center></html>", JLabel.CENTER);
+        panel.add(title, BorderLayout.CENTER);
 
-     
-        JButton nextButton = new JButton("explore"); 
-        nextButton.setFont(new Font("Arial", Font.PLAIN, 18));
+        JButton nextBtn = new JButton("Go to Login Page →");
+        nextBtn.setFont(new Font("Arial", Font.BOLD, 18));
+        nextBtn.setBackground(new Color(46, 204, 113));
+        nextBtn.setForeground(Color.WHITE);
+        nextBtn.setFocusPainted(false);
 
-       
-        nextButton.addActionListener(new ActionListener() {
+        nextBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new DescriptionFrame().setVisible(true);
-                dispose();  
+                dispose(); // close welcome frame
+                new LoginFrame(); // open login frame
             }
         });
 
-       
-        panel.add(heading, BorderLayout.CENTER);
-        panel.add(nextButton, BorderLayout.SOUTH);
+        JPanel btnPanel = new JPanel();
+        btnPanel.setBackground(Color.WHITE);
+        btnPanel.add(nextBtn);
 
-       
+        panel.add(btnPanel, BorderLayout.SOUTH);
         add(panel);
+        setVisible(true);
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new WelcomeFrame().setVisible(true);
-        });
+        SwingUtilities.invokeLater(() -> new WelcomeFrame());
     }
 }
-
