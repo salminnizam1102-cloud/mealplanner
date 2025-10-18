@@ -74,3 +74,4 @@ public class OutputFrame extends JFrame {
     }
 }
 	}
+
