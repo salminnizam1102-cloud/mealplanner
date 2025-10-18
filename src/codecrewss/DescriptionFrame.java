@@ -26,7 +26,7 @@ public class DescriptionFrame extends JFrame {
 
         // Description label
         JLabel label = new JLabel(
-            "<html><center><font color='yellow' size='+3'><b>ABOUT US</b></font><br><br>" +
+            "<html><center><font color='blue' size='+3'><b>ABOUT US</b></font><br><br>" +
             "This calculates your daily calorie needs (BMR & TDEE) and suggests meals. It helps maintain a healthy diet in busy life.<br>" +
             "<b>This meal planner provides a customizable, balanced daily meal plan designed for healthy adults.<br><br>" +
             "</b><font color='blue' size='+1'>MEAL DISTRIBUTION.</font><br><br>" +
@@ -64,3 +64,4 @@ public class DescriptionFrame extends JFrame {
         setVisible(true);
     }
 }
+
