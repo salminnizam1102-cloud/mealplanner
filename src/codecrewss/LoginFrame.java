@@ -1,4 +1,5 @@
 package codecrewss;
+
 import javax.swing.*;
 import java.awt.*;
 import java.sql.*;
@@ -9,46 +10,85 @@ public class LoginFrame extends JFrame {
 
     public LoginFrame() {
         setTitle("Login - Meal Planner");
-        setSize(400, 300);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        JPanel panel = new JPanel(new GridLayout(4, 2, 10, 10));
-        panel.setBackground(new Color(54, 33, 25));
-        panel.setBorder(BorderFactory.createEmptyBorder(150, 500, 150, 500));
+        // Main background panel
+        JPanel mainPanel = new JPanel(new GridBagLayout());
+        mainPanel.setBackground(new Color(54, 33, 25)); // Dark brown
 
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        // Container for the login box
+        JPanel loginPanel = new JPanel(new GridBagLayout());
+        loginPanel.setBackground(new Color(245, 245, 245)); // Light cream
+        loginPanel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(139, 69, 19), 2),
+                BorderFactory.createEmptyBorder(40, 50, 40, 50)
+        ));
+
+        GridBagConstraints lg = new GridBagConstraints();
+        lg.insets = new Insets(10, 10, 10, 10);
+        lg.fill = GridBagConstraints.HORIZONTAL;
+
+        // Title
+        JLabel titleLabel = new JLabel("Welcome to Meal Planner", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 26));
+        titleLabel.setForeground(new Color(54, 33, 25));
+        lg.gridx = 0; lg.gridy = 0; lg.gridwidth = 2;
+        loginPanel.add(titleLabel, lg);
+
+        // Username label & field
         JLabel userLabel = new JLabel("Username:");
-        userLabel.setForeground(Color.WHITE);
-        userLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        usernameField = new JTextField();
+        userLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        userLabel.setForeground(new Color(54, 33, 25));
+        lg.gridx = 0; lg.gridy = 1; lg.gridwidth = 1;
+        loginPanel.add(userLabel, lg);
 
+        usernameField = new JTextField(15);
+        usernameField.setFont(new Font("Arial", Font.PLAIN, 14));
+        usernameField.setBorder(BorderFactory.createLineBorder(new Color(139, 69, 19), 1));
+        lg.gridx = 1; lg.gridy = 1;
+        loginPanel.add(usernameField, lg);
+
+        // Password label & field
         JLabel passLabel = new JLabel("Password:");
-        passLabel.setForeground(Color.WHITE);
-        passLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        passwordField = new JPasswordField();
+        passLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        passLabel.setForeground(new Color(54, 33, 25));
+        lg.gridx = 0; lg.gridy = 2;
+        loginPanel.add(passLabel, lg);
 
-        JButton loginButton = new JButton("Login");
-        loginButton.setBackground(Color.WHITE);
-        loginButton.setForeground(new Color(54, 33, 25));
+        passwordField = new JPasswordField(15);
+        passwordField.setFont(new Font("Arial", Font.PLAIN, 14));
+        passwordField.setBorder(BorderFactory.createLineBorder(new Color(139, 69, 19), 1));
+        lg.gridx = 1; lg.gridy = 2;
+        loginPanel.add(passwordField, lg);
 
-        JButton registerButton = new JButton("Register");
-        registerButton.setBackground(Color.WHITE);
-        registerButton.setForeground(new Color(54, 33, 25));
+        // Buttons panel
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
+        buttonPanel.setOpaque(false);
 
-        JButton backButton = new JButton("Back");
-        backButton.setBackground(Color.WHITE);
-        backButton.setForeground(new Color(54, 33, 25));
+        JButton loginButton = createStyledButton("Login");
+        JButton registerButton = createStyledButton("Sign up");
+        JButton backButton = createStyledButton("Back");
 
         // ✅ LOGIN
         loginButton.addActionListener(e -> {
             String username = usernameField.getText().trim();
             String password = new String(passwordField.getPassword());
 
+            if (username.isEmpty() || password.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please enter username and password!");
+                return;
+            }
+
             if (authenticateUser(username, password)) {
-                JOptionPane.showMessageDialog(this, "Login successful! Welcome " + username);
+                JOptionPane.showMessageDialog(this, "Login successful! Welcome " + username + ".");
                 dispose();
-                new DescriptionFrame(); // go to next page after login
+                new DescriptionFrame();
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid username or password!");
             }
@@ -71,21 +111,50 @@ public class LoginFrame extends JFrame {
             }
         });
 
-        // ⬅ BACK BUTTON
+        // ⬅ BACK
         backButton.addActionListener(e -> {
             dispose();
             new WelcomeFrame();
         });
 
-        panel.add(userLabel); panel.add(usernameField);
-        panel.add(passLabel); panel.add(passwordField);
-        panel.add(loginButton); panel.add(registerButton);
-        panel.add(new JLabel()); panel.add(backButton);
+        buttonPanel.add(loginButton);
+        buttonPanel.add(registerButton);
+        buttonPanel.add(backButton);
 
-        add(panel);
+        lg.gridx = 0; lg.gridy = 3; lg.gridwidth = 2;
+        loginPanel.add(buttonPanel, lg);
+
+        // Add the login panel to the center
+        gbc.gridx = 0; gbc.gridy = 0;
+        mainPanel.add(loginPanel, gbc);
+
+        add(mainPanel);
         setVisible(true);
     }
 
+    // Helper method to create professional buttons
+    private JButton createStyledButton(String text) {
+        JButton button = new JButton(text);
+        button.setBackground(new Color(139, 69, 19));
+        button.setForeground(Color.WHITE);
+        button.setFont(new Font("Arial", Font.BOLD, 16));
+        button.setFocusPainted(false);
+        button.setBorder(BorderFactory.createEmptyBorder(8, 20, 8, 20));
+        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        // Hover effect
+        button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                button.setBackground(new Color(160, 82, 45));
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                button.setBackground(new Color(139, 69, 19));
+            }
+        });
+        return button;
+    }
+
+    // ✅ AUTHENTICATION
     private boolean authenticateUser(String username, String password) {
         String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -100,6 +169,7 @@ public class LoginFrame extends JFrame {
         }
     }
 
+    // ✅ REGISTRATION
     private boolean registerUser(String username, String password) {
         String sql = "INSERT INTO users (username, password) VALUES (?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -111,5 +181,10 @@ public class LoginFrame extends JFrame {
         } catch (SQLException e) {
             return false;
         }
+    }
+
+    // --- For quick testing ---
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(LoginFrame::new);
     }
 }

@@ -1,11 +1,12 @@
 package codecrewss;
 
 import javax.swing.*;
+import javax.swing.text.*;
 import java.awt.*;
 
 public class OutputFrame extends JFrame {
 
-   
+    // Custom panel to draw the background image
     class BackgroundPanel extends JPanel {
         private Image backgroundImage;
 
@@ -22,44 +23,70 @@ public class OutputFrame extends JFrame {
     }
 
     public OutputFrame(double bmr, double tdee, String name) {
+        // Frame setup
         setTitle("Results");
-        setSize(600, 500);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setExtendedState(JFrame.MAXIMIZED_BOTH); // Fullscreen
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        
-        BackgroundPanel panel = new BackgroundPanel("path/to/your/image.jpg");
+        // Background panel setup
+        BackgroundPanel panel = new BackgroundPanel("image/outputimage.jpg");
 
-        JTextArea outputArea = new JTextArea();
-        outputArea.setEditable(false);
-        outputArea.setFont(new Font("Arial", Font.BOLD, 25));
-        outputArea.setOpaque(false); // Make text area transparent
-        outputArea.setForeground(Color.WHITE);
-        outputArea.append("\t\t\t\tHello " + name + "!\n\n");
-        outputArea.append("\tBMR: " + String.format("%.2f kcal/day\n", bmr));
-        outputArea.append("\tTDEE: " + String.format("%.2f kcal/day\n\n", tdee));
-        outputArea.append(DatabaseConnection.getMealSuggestions(tdee));
-        outputArea.setCaretPosition(0);
+        // JTextPane (supports alignment & styling)
+        JTextPane outputPane = new JTextPane();
+        outputPane.setEditable(false);
+        outputPane.setFont(new Font("Arial", Font.BOLD, 25));
+        outputPane.setOpaque(false);
+        outputPane.setForeground(Color.BLACK);
 
-        JScrollPane scroll = new JScrollPane(outputArea);
+        // Center text horizontally
+        StyledDocument doc = outputPane.getStyledDocument();
+        SimpleAttributeSet center = new SimpleAttributeSet();
+        StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+        StyleConstants.setForeground(center, Color.BLACK);
+        StyleConstants.setFontSize(center, 25);
+        StyleConstants.setFontFamily(center, "Arial");
+        doc.setParagraphAttributes(0, doc.getLength(), center, false);
+
+        // Insert content
+        try {
+            doc.insertString(doc.getLength(), "\nHello " + name + "!\n\n", center);
+            doc.insertString(doc.getLength(),
+                    "BMR: " + String.format("%.2f kcal/day\n", bmr), center);
+            doc.insertString(doc.getLength(),
+                    "TDEE: " + String.format("%.2f kcal/day\n\n", tdee), center);
+
+            // Fetch meal suggestions from your DatabaseConnection class
+            String mealSuggestions = DatabaseConnection.getMealSuggestions(tdee);
+            doc.insertString(doc.getLength(), mealSuggestions, center);
+        } catch (BadLocationException e) {
+            e.printStackTrace();
+        }
+
+        // Scroll pane for text
+        JScrollPane scroll = new JScrollPane(outputPane);
         scroll.setOpaque(false);
         scroll.getViewport().setOpaque(false);
+        scroll.setBorder(BorderFactory.createEmptyBorder(30, 100, 30, 100));
         panel.add(scroll, BorderLayout.CENTER);
 
+        // Buttons panel
         JPanel buttons = new JPanel();
-        buttons.setBackground(new Color(139, 69, 19));
-        JButton prev = new JButton("Previous ");
+        buttons.setBackground(new Color(139, 69, 19)); // Brown background
+
+        JButton prev = new JButton("Previous");
         prev.setBackground(Color.WHITE);
         prev.setForeground(new Color(139, 69, 19));
+        prev.setFont(new Font("Arial", Font.BOLD, 18));
         prev.addActionListener(e -> {
             dispose();
             new UserInputFrame();
         });
 
-        JButton visitAgain = new JButton("Visit Again ");
+        JButton visitAgain = new JButton("Visit Again");
         visitAgain.setBackground(Color.WHITE);
         visitAgain.setForeground(new Color(139, 69, 19));
+        visitAgain.setFont(new Font("Arial", Font.BOLD, 18));
         visitAgain.addActionListener(e -> {
             dispose();
             new WelcomeFrame();
@@ -69,8 +96,14 @@ public class OutputFrame extends JFrame {
         buttons.add(visitAgain);
         panel.add(buttons, BorderLayout.SOUTH);
 
+        // Add everything to frame
         add(panel);
         setVisible(true);
     }
+
+    // --- For testing only (You can remove this main method) ---
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() ->
+                new OutputFrame(1500.45, 2200.67, "Salmi"));
+    }
 }
-	}

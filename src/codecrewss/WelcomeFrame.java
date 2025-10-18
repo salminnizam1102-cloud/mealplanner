@@ -1,51 +1,109 @@
 package codecrewss;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
+import java.awt.event.*;
 
 public class WelcomeFrame extends JFrame {
 
     public WelcomeFrame() {
+        // === Window Setup ===
         setTitle("Welcome to Meal Planner");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(600, 400);
-        setLocationRelativeTo(null);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setLocationRelativeTo(null);
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-        panel.setBackground(Color.WHITE);
+        // === Background Image ===
+        ImageIcon bgImage = new ImageIcon("src/images/meal.jpg"); // 🖼️ Change path if needed
+        Image scaledImage = bgImage.getImage().getScaledInstance(
+                Toolkit.getDefaultToolkit().getScreenSize().width,
+                Toolkit.getDefaultToolkit().getScreenSize().height,
+                Image.SCALE_SMOOTH
+        );
 
-        JLabel title = new JLabel("<html><center><h1 style='color:#2C3E50;'>Welcome to Meal Planner</h1>"
-                + "<h3 style='color:#16A085;'>Your daily healthy diet assistant</h3></center></html>", JLabel.CENTER);
-        panel.add(title, BorderLayout.CENTER);
+        JLabel background = new JLabel(new ImageIcon(scaledImage));
+        background.setLayout(new GridBagLayout());
+        add(background);
 
-        JButton nextBtn = new JButton("Go to Login Page →");
-        nextBtn.setFont(new Font("Arial", Font.BOLD, 18));
-        nextBtn.setBackground(new Color(46, 204, 113));
-        nextBtn.setForeground(Color.WHITE);
-        nextBtn.setFocusPainted(false);
+        // === Semi-transparent Overlay Panel ===
+        JPanel overlayPanel = new JPanel();
+        overlayPanel.setOpaque(true);
+        overlayPanel.setBackground(new Color(0, 0, 0, 150)); // semi-transparent black overlay
+        overlayPanel.setLayout(new BoxLayout(overlayPanel, BoxLayout.Y_AXIS));
+        overlayPanel.setBorder(BorderFactory.createEmptyBorder(80, 40, 80, 40));
 
-        nextBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose(); // close welcome frame
-                new LoginFrame(); // open login frame
-            }
+        // === Title ===
+        JLabel title = new JLabel("Welcome to Meal Planner", JLabel.CENTER);
+        title.setFont(new Font("Segoe UI", Font.BOLD, 54));
+        title.setForeground(Color.WHITE);
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
+        overlayPanel.add(title);
+
+        // === Subtitle ===
+        JLabel subtitle = new JLabel("Plan smart. Eat healthy. Live better.", JLabel.CENTER);
+        subtitle.setFont(new Font("Segoe UI", Font.PLAIN, 26));
+        subtitle.setForeground(new Color(220, 220, 220));
+        subtitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+        overlayPanel.add(subtitle);
+
+        overlayPanel.add(Box.createRigidArea(new Dimension(0, 60)));
+
+        // === Start Button ===
+        JButton startButton = new JButton("Get Started →");
+        styleButton(startButton);
+        overlayPanel.add(startButton);
+
+        // === Add Overlay Panel to Background ===
+        background.add(overlayPanel);
+
+        // === Button Action ===
+        startButton.addActionListener(e -> {
+            dispose();
+            new LoginFrame();
         });
 
-        JPanel btnPanel = new JPanel();
-        btnPanel.setBackground(Color.WHITE);
-        btnPanel.add(nextBtn);
-
-        panel.add(btnPanel, BorderLayout.SOUTH);
-        add(panel);
         setVisible(true);
     }
 
+    /**
+     * Helper method to style the main button
+     */
+    private void styleButton(JButton button) {
+        Color baseColor = new Color(52, 152, 219);   // Elegant blue
+        Color hoverColor = new Color(41, 128, 185);  // Darker blue
+
+        button.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        button.setBackground(baseColor);
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
+        button.setBorder(BorderFactory.createEmptyBorder(14, 36, 14, 36));
+        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button.setMaximumSize(new Dimension(250, 60));
+
+        // Rounded edges for modern feel
+        button.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(baseColor.darker(), 2, true),
+                BorderFactory.createEmptyBorder(12, 36, 12, 36)
+        ));
+
+        // Hover effect
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                button.setBackground(hoverColor);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                button.setBackground(baseColor);
+            }
+        });
+    }
+
+    // === Test Run ===
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new WelcomeFrame());
+        SwingUtilities.invokeLater(WelcomeFrame::new);
     }
 }
