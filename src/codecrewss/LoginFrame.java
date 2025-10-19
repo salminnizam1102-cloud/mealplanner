@@ -14,17 +14,17 @@ public class LoginFrame extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Main background panel
+      
         JPanel mainPanel = new JPanel(new GridBagLayout());
-        mainPanel.setBackground(new Color(54, 33, 25)); // Dark brown
+        mainPanel.setBackground(new Color(54, 33, 25)); 
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Container for the login box
+       
         JPanel loginPanel = new JPanel(new GridBagLayout());
-        loginPanel.setBackground(new Color(245, 245, 245)); // Light cream
+        loginPanel.setBackground(new Color(245, 245, 245)); 
         loginPanel.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(new Color(139, 69, 19), 2),
                 BorderFactory.createEmptyBorder(40, 50, 40, 50)
@@ -41,7 +41,7 @@ public class LoginFrame extends JFrame {
         lg.gridx = 0; lg.gridy = 0; lg.gridwidth = 2;
         loginPanel.add(titleLabel, lg);
 
-        // Username label & field
+       
         JLabel userLabel = new JLabel("Username:");
         userLabel.setFont(new Font("Arial", Font.BOLD, 16));
         userLabel.setForeground(new Color(54, 33, 25));
@@ -54,7 +54,7 @@ public class LoginFrame extends JFrame {
         lg.gridx = 1; lg.gridy = 1;
         loginPanel.add(usernameField, lg);
 
-        // Password label & field
+        
         JLabel passLabel = new JLabel("Password:");
         passLabel.setFont(new Font("Arial", Font.BOLD, 16));
         passLabel.setForeground(new Color(54, 33, 25));
@@ -67,7 +67,7 @@ public class LoginFrame extends JFrame {
         lg.gridx = 1; lg.gridy = 2;
         loginPanel.add(passwordField, lg);
 
-        // Buttons panel
+        
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
         buttonPanel.setOpaque(false);
 
@@ -75,7 +75,7 @@ public class LoginFrame extends JFrame {
         JButton registerButton = createStyledButton("Sign up");
         JButton backButton = createStyledButton("Back");
 
-        // ✅ LOGIN
+       
         loginButton.addActionListener(e -> {
             String username = usernameField.getText().trim();
             String password = new String(passwordField.getPassword());
@@ -94,7 +94,7 @@ public class LoginFrame extends JFrame {
             }
         });
 
-        // ✅ REGISTER
+       
         registerButton.addActionListener(e -> {
             String username = usernameField.getText().trim();
             String password = new String(passwordField.getPassword());
@@ -111,7 +111,7 @@ public class LoginFrame extends JFrame {
             }
         });
 
-        // ⬅ BACK
+      
         backButton.addActionListener(e -> {
             dispose();
             new WelcomeFrame();
@@ -124,7 +124,7 @@ public class LoginFrame extends JFrame {
         lg.gridx = 0; lg.gridy = 3; lg.gridwidth = 2;
         loginPanel.add(buttonPanel, lg);
 
-        // Add the login panel to the center
+      
         gbc.gridx = 0; gbc.gridy = 0;
         mainPanel.add(loginPanel, gbc);
 
@@ -132,7 +132,7 @@ public class LoginFrame extends JFrame {
         setVisible(true);
     }
 
-    // Helper method to create professional buttons
+   
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
         button.setBackground(new Color(139, 69, 19));
@@ -142,7 +142,7 @@ public class LoginFrame extends JFrame {
         button.setBorder(BorderFactory.createEmptyBorder(8, 20, 8, 20));
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-        // Hover effect
+       
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 button.setBackground(new Color(160, 82, 45));
@@ -154,7 +154,7 @@ public class LoginFrame extends JFrame {
         return button;
     }
 
-    // ✅ AUTHENTICATION
+   
     private boolean authenticateUser(String username, String password) {
         String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -169,7 +169,7 @@ public class LoginFrame extends JFrame {
         }
     }
 
-    // ✅ REGISTRATION
+   
     private boolean registerUser(String username, String password) {
         String sql = "INSERT INTO users (username, password) VALUES (?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -183,7 +183,7 @@ public class LoginFrame extends JFrame {
         }
     }
 
-    // --- For quick testing ---
+   
     public static void main(String[] args) {
         SwingUtilities.invokeLater(LoginFrame::new);
     }

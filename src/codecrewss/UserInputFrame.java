@@ -15,13 +15,13 @@ public class UserInputFrame extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // ===== Background panel =====
+      
         JPanel backgroundPanel = new JPanel(new GridBagLayout());
-        backgroundPanel.setBackground(new Color(54, 33, 25)); // dark brown
+        backgroundPanel.setBackground(new Color(54, 33, 25));
 
-        // ===== Form container =====
+        
         JPanel formPanel = new JPanel(new GridBagLayout());
-        formPanel.setBackground(new Color(245, 245, 245)); // light background
+        formPanel.setBackground(new Color(245, 245, 245)); 
         formPanel.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(new Color(139, 69, 19), 2),
                 BorderFactory.createEmptyBorder(40, 50, 40, 50)
@@ -31,7 +31,7 @@ public class UserInputFrame extends JFrame {
         gbc.insets = new Insets(12, 12, 12, 12);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // ===== Title =====
+       
         JLabel title = new JLabel("Enter Your Details", SwingConstants.CENTER);
         title.setFont(new Font("Arial", Font.BOLD, 28));
         title.setForeground(new Color(54, 33, 25));
@@ -40,25 +40,25 @@ public class UserInputFrame extends JFrame {
         gbc.gridwidth = 2;
         formPanel.add(title, gbc);
 
-        gbc.gridwidth = 1; // reset for normal fields
+        gbc.gridwidth = 1; 
 
-        // ===== Name =====
+     
         addLabel(formPanel, gbc, "Name:", 1);
         nameField = addTextField(formPanel, gbc, 1);
 
-        // ===== Age =====
+       
         addLabel(formPanel, gbc, "Age (years):", 2);
         ageField = addTextField(formPanel, gbc, 2);
 
-        // ===== Weight =====
+       
         addLabel(formPanel, gbc, "Weight (kg):", 3);
         weightField = addTextField(formPanel, gbc, 3);
 
-        // ===== Height =====
+       
         addLabel(formPanel, gbc, "Height (cm):", 4);
         heightField = addTextField(formPanel, gbc, 4);
 
-        // ===== Gender =====
+       
         JLabel sexLabel = new JLabel("Sex:");
         sexLabel.setFont(new Font("Arial", Font.BOLD, 16));
         sexLabel.setForeground(new Color(54, 33, 25));
@@ -88,7 +88,7 @@ public class UserInputFrame extends JFrame {
         gbc.gridy = 5;
         formPanel.add(sexPanel, gbc);
 
-        // ===== Activity Level =====
+    
         JLabel activityLabel = new JLabel("Activity Level:");
         activityLabel.setFont(new Font("Arial", Font.BOLD, 16));
         activityLabel.setForeground(new Color(54, 33, 25));
@@ -108,7 +108,7 @@ public class UserInputFrame extends JFrame {
         gbc.gridy = 6;
         formPanel.add(activityCombo, gbc);
 
-        // ===== Buttons =====
+       
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
         buttonPanel.setOpaque(false);
 
@@ -123,11 +123,11 @@ public class UserInputFrame extends JFrame {
         gbc.gridwidth = 2;
         formPanel.add(buttonPanel, gbc);
 
-        // ===== Add form to background =====
+   
         backgroundPanel.add(formPanel);
         add(backgroundPanel);
 
-        // ===== Button Actions =====
+       
         submitButton.addActionListener(e -> handleSubmit());
         prevButton.addActionListener(e -> {
             dispose();
@@ -137,7 +137,7 @@ public class UserInputFrame extends JFrame {
         setVisible(true);
     }
 
-    // Helper to create labels
+ 
     private void addLabel(JPanel panel, GridBagConstraints gbc, String text, int y) {
         JLabel label = new JLabel(text);
         label.setFont(new Font("Arial", Font.BOLD, 16));
@@ -147,7 +147,7 @@ public class UserInputFrame extends JFrame {
         panel.add(label, gbc);
     }
 
-    // Helper to create text fields
+    
     private JTextField addTextField(JPanel panel, GridBagConstraints gbc, int y) {
         JTextField field = new JTextField(12);
         field.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -158,7 +158,7 @@ public class UserInputFrame extends JFrame {
         return field;
     }
 
-    // Styled buttons
+   
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
         button.setBackground(new Color(139, 69, 19));
@@ -179,7 +179,7 @@ public class UserInputFrame extends JFrame {
         return button;
     }
 
-    // ===== Handle Submit Logic =====
+ 
     private void handleSubmit() {
         try {
             String name = nameField.getText().trim();
@@ -200,7 +200,7 @@ public class UserInputFrame extends JFrame {
         }
     }
 
-    // --- For quick testing only ---
+  
     public static void main(String[] args) {
         SwingUtilities.invokeLater(UserInputFrame::new);
     }
