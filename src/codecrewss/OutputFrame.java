@@ -7,7 +7,6 @@ import java.awt.*;
 
 public class OutputFrame extends JFrame {
 
-    // Custom panel to draw the background image
     class BackgroundPanel extends JPanel {
         private Image backgroundImage;
 
@@ -24,16 +23,15 @@ public class OutputFrame extends JFrame {
     }
 
     public OutputFrame(double bmr, double tdee, String name) {
-        // Frame setup
+       
         setTitle("Results");
-        setExtendedState(JFrame.MAXIMIZED_BOTH); // Fullscreen
+        setExtendedState(JFrame.MAXIMIZED_BOTH); 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
         // Background panel setup
         BackgroundPanel panel = new BackgroundPanel("image/bg.jpg");
-
-        // Top-right logout button panel
+        
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.setOpaque(false);
         JButton logoutTop = new JButton("Logout");
@@ -52,14 +50,14 @@ public class OutputFrame extends JFrame {
         topPanel.add(logoutWrapper, BorderLayout.NORTH);
         panel.add(topPanel, BorderLayout.NORTH);
 
-        // JTextPane (supports alignment & styling)
+       
         JTextPane outputPane = new JTextPane();
         outputPane.setEditable(false);
         outputPane.setFont(new Font("Arial", Font.BOLD, 25));
         outputPane.setOpaque(false);
         outputPane.setForeground(Color.BLACK);
 
-        // Center text horizontally
+        
         StyledDocument doc = outputPane.getStyledDocument();
         SimpleAttributeSet center = new SimpleAttributeSet();
         StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
@@ -68,7 +66,7 @@ public class OutputFrame extends JFrame {
         StyleConstants.setFontFamily(center, "Arial");
         doc.setParagraphAttributes(0, doc.getLength(), center, false);
 
-        // Insert content
+       
         try {
             doc.insertString(doc.getLength(), "\nHello " + name + "!\n\n", center);
             doc.insertString(doc.getLength(),
@@ -76,23 +74,23 @@ public class OutputFrame extends JFrame {
             doc.insertString(doc.getLength(),
                     "TDEE: " + String.format("%.2f kcal/day\n\n", tdee), center);
 
-            // Fetch meal suggestions from your DatabaseConnection class
+          
             String mealSuggestions = DatabaseConnection.getMealSuggestions(tdee);
             doc.insertString(doc.getLength(), mealSuggestions, center);
         } catch (BadLocationException e) {
             e.printStackTrace();
         }
 
-        // Scroll pane for text
+       
         JScrollPane scroll = new JScrollPane(outputPane);
         scroll.setOpaque(false);
         scroll.getViewport().setOpaque(false);
         scroll.setBorder(BorderFactory.createEmptyBorder(30, 100, 30, 100));
         panel.add(scroll, BorderLayout.CENTER);
 
-        // Bottom buttons panel
+      
         JPanel buttons = new JPanel();
-        buttons.setBackground(new Color(139, 69, 19)); // Brown background
+        buttons.setBackground(new Color(139, 69, 19)); 
 
         JButton prev = new JButton("Previous");
         prev.setBackground(Color.WHITE);
@@ -116,7 +114,7 @@ public class OutputFrame extends JFrame {
         buttons.add(visitAgain);
         panel.add(buttons, BorderLayout.SOUTH);
 
-        // Add everything to frame
+       
         add(panel);
         setVisible(true);
     }
