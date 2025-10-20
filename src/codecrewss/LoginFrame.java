@@ -14,7 +14,7 @@ public class LoginFrame extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-      
+       
         JPanel mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBackground(new Color(54, 33, 25)); 
 
@@ -22,7 +22,7 @@ public class LoginFrame extends JFrame {
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-       
+        
         JPanel loginPanel = new JPanel(new GridBagLayout());
         loginPanel.setBackground(new Color(245, 245, 245)); 
         loginPanel.setBorder(BorderFactory.createCompoundBorder(
@@ -34,7 +34,7 @@ public class LoginFrame extends JFrame {
         lg.insets = new Insets(10, 10, 10, 10);
         lg.fill = GridBagConstraints.HORIZONTAL;
 
-        // Title
+       
         JLabel titleLabel = new JLabel("Welcome to Meal Planner", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 26));
         titleLabel.setForeground(new Color(54, 33, 25));
@@ -75,7 +75,7 @@ public class LoginFrame extends JFrame {
         JButton registerButton = createStyledButton("Sign up");
         JButton backButton = createStyledButton("Back");
 
-       
+        
         loginButton.addActionListener(e -> {
             String username = usernameField.getText().trim();
             String password = new String(passwordField.getPassword());
@@ -111,7 +111,7 @@ public class LoginFrame extends JFrame {
             }
         });
 
-      
+       
         backButton.addActionListener(e -> {
             dispose();
             new WelcomeFrame();
@@ -132,7 +132,7 @@ public class LoginFrame extends JFrame {
         setVisible(true);
     }
 
-   
+  
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
         button.setBackground(new Color(139, 69, 19));
@@ -142,7 +142,7 @@ public class LoginFrame extends JFrame {
         button.setBorder(BorderFactory.createEmptyBorder(8, 20, 8, 20));
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-       
+        
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 button.setBackground(new Color(160, 82, 45));

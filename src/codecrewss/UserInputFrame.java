@@ -177,9 +177,7 @@ public class UserInputFrame extends JFrame {
             }
         });
         return button;
-    }
-
- 
+    } 
     private void handleSubmit() {
         try {
             String name = nameField.getText().trim();
